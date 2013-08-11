@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://jexif.org/xml/ns/tags"
+            xmlns="http://jexif.org/xml/ns/tags" elementFormDefault="qualified">
+    <xsd:element name="tags">
+        <xsd:complexType>
+            <xsd:annotation>
+                <xsd:documentation>Opening tag for all defined Exif Tags.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+                <xsd:element ref="tag"/>
+            </xsd:sequence>
+            <xsd:attribute name="version" type="version-type" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="tag">
+        <xsd:annotation>
+            <xsd:documentation>Exif Tag. It represents first two bytes of every Exif (IFD) entry.</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:attribute name="name" type="name-type" use="required"/>
+            <xsd:attribute name="hex" type="hex-type" use="required"/>
+            <xsd:attribute name="type" type="exif-tag-type" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:simpleType name="version-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[0-9]+.[0-9]+"/>
+            <xsd:minLength value="3"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="name-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="hex-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[0-9a-fA-F]+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="exif-tag-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="BYTE"/>
+            <xsd:enumeration value="ASCII"/>
+            <xsd:enumeration value="SHORT"/>
+            <xsd:enumeration value="LONG"/>
+            <xsd:enumeration value="RATIONAL"/>
+            <xsd:enumeration value="UNDEFINED"/>
+            <xsd:enumeration value="SLONG"/>
+            <xsd:enumeration value="SRATIONAL"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

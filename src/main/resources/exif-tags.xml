@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tags xmlns="http://jexif.org/xml/ns/tags" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jexif.org/xml/ns/tags tags_1_0.xsd" version="1.0">
+    <tag name="Exif IFD Pointer" hex="8769" type="LONG"/>
+    <tag name="GPS Info IFD Pointer" hex="8825" type="LONG"/>
+    <tag name="Interoperability IFD Pointer" hex="A005" type="LONG"/>
+    <tag name="ImageWidth" hex="0100" type="SHORT"/>
+    <tag name="ImageWidth" hex="0100" type="LONG"/>
+    <tag name="ImageLength" hex="0101" type="SHORT"/>
+    <tag name="ImageLength" hex="0101" type="LONG"/>
+    <tag name="BitsPerSample" hex="0102" type="SHORT"/>
+    <tag name="Compression" hex="0103" type="SHORT"/>
+    <tag name="PhotometricInterpretation" hex="0106" type="SHORT"/>
+    <tag name="Orientation" hex="0112" type="SHORT"/>
+    <tag name="SamplesPerPixel" hex="0115" type="SHORT"/>
+    <tag name="PlanarConfiguration" hex="011C" type="SHORT"/>
+    <tag name="YCbCrSubSampling" hex="0212" type="SHORT"/>
+    <tag name="YCbCrPositioning" hex="0213" type="SHORT"/>
+    <tag name="XResolution" hex="011A" type="RATIONAL"/>
+    <tag name="YResolution" hex="011B" type="RATIONAL"/>
+    <tag name="ResolutionUnit" hex="0128" type="SHORT"/>
+    <tag name="Make" hex="010f" type="ASCII"/>
+    <tag name="Model" hex="0110" type="ASCII"/>
+    <tag name="StripOffsets" hex="0111" type="SHORT"/>
+    <tag name="StripOffsets" hex="0111" type="LONG"/>
+    <tag name="StripByteCounts" hex="0117" type="SHORT"/>
+    <tag name="StripByteCounts" hex="0117" type="LONG"/>
+    <tag name="DateTime" hex="0132" type="ASCII"/>
+    <tag name="Copyright" hex="8298" type="ASCII"/>
+    <tag name="Artist" hex="013b" type="ASCII"/>
+    <tag name="ImageDescription" hex="010e" type="ASCII"/>
+    <tag name="Exif Software Version 1.00a" hex="0131" type="ASCII"/>
+    <tag name="ISOSpeedRatings" hex="8827" type="SHORT"/>
+    <tag name="BrightnessValue" hex="9203" type="SRATIONAL"/>
+    <tag name="ExposureBiasValue" hex="9204" type="SRATIONAL"/>
+    <tag name="MeteringMode" hex="9207" type="SHORT"/>
+    <tag name="LightSource" hex="9208" type="SHORT"/>
+    <tag name="Flash" hex="9209" type="SHORT"/>
+    <tag name="FocalLength" hex="920A" type="RATIONAL"/>
+    <tag name="MakerNote" hex="927C" type="UNDEFINED"/>
+    <tag name="UserComment" hex="9286" type="UNDEFINED"/>
+    <tag name="FlashpixVersion" hex="a000" type="UNDEFINED"/>
+    <tag name="ColorSpace" hex="a001" type="SHORT"/>
+    <tag name="PixelXDimension" hex="a002" type="SHORT"/>
+    <tag name="PixelXDimension" hex="a002" type="LONG"/>
+    <tag name="PixelYDimension" hex="a003" type="SHORT"/>
+    <tag name="PixelYDimension" hex="a003" type="LONG"/>
+    <tag name="FileSource" hex="a300" type="UNDEFINED"/>
+    <tag name="SubjectDistanceRange" hex="a40c" type="SHORT"/>
+    <tag name="Sharpness" hex="a40a" type="SHORT"/>
+    <tag name="Saturation" hex="a409" type="SHORT"/>
+    <tag name="Contrast" hex="a408" type="SHORT"/>
+    <tag name="GainControl" hex="a407" type="SHORT"/>
+    <tag name="SceneCaptureType" hex="a406" type="SHORT"/>
+    <tag name="FocalLengthIn35mmFilm" hex="a405" type="SHORT"/>
+    <tag name="DigitalZoomRatio" hex="a404" type="RATIONAL"/>
+    <tag name="WhiteBalance" hex="a403" type="SHORT"/>
+    <tag name="ExposureMode" hex="a402" type="SHORT"/>
+    <tag name="CustomRendered" hex="a401" type="SHORT"/>
+    <tag name="SceneType" hex="a301" type="UNDEFINED"/>
+    <tag name="MaxApertureValue" hex="9205" type="RATIONAL"/>
+    <tag name="CompressedBitsPerPixel" hex="9102" type="RATIONAL"/>
+    <tag name="ComponentsConfiguration" hex="9101" type="UNDEFINED"/>
+    <tag name="DateTimeDigitized" hex="9004" type="ASCII"/>
+    <tag name="DateTimeOriginal" hex="9003" type="ASCII"/>
+    <tag name="ExifVersion" hex="9000" type="UNDEFINED"/>
+    <tag name="ExposureProgram" hex="8822" type="SHORT"/>
+    <tag name="ExposureTime" hex="829a" type="RATIONAL"/>
+    <tag name="FNumber" hex="829d" type="RATIONAL"/>
+    <tag name="ShutterSpeedValue" hex="9201" type="SRATIONAL"/>
+    <tag name="ApertureValue" hex="9202" type="RATIONAL"/>
+    <tag name="FocalPlaneXResolution" hex="a20e" type="RATIONAL"/>
+    <tag name="FocalPlaneYResolution" hex="a20f" type="RATIONAL"/>
+    <tag name="FocalPlaneResolutionUnit" hex="a210" type="SHORT"/>
+    <tag name="SensingMethod" hex="a217" type="SHORT"/>
+    <tag name="SubsecTime" hex="9290" type="ASCII"/>
+    <tag name="SubsecTimeOriginal" hex="9291" type="ASCII"/>
+    <tag name="SubsecTimeDigitalized" hex="9292" type="ASCII"/>
+    <tag name="ExposureIndex" hex="A215" type="RATIONAL"/>
+    <tag name="JPEGInterchangeFormat" hex="0201" type="LONG"/>
+    <tag name="JPEGInterchangeFormatLength" hex="0202" type="LONG"/>
+</tags>
