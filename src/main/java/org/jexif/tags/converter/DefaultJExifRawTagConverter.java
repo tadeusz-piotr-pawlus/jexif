@@ -18,15 +18,16 @@ public class DefaultJExifRawTagConverter implements JExifRawTagConverter {
     }
 
     @Override
-    public JExifTag<? extends JExifType> convert(JExifRawTag rawTag) throws JExifRawTagConverterException {
+    public JExifTag convert(JExifRawTag rawTag) throws JExifTagsRawTagConverterException {
         try {
-            JExifType type = this.typeFactory.createByName(rawTag.getType());
             JExifTagNumber tagNumber = new JExifTagNumber(rawTag.getNumber(), getRadix());
-            JExifValue<? extends JExifType> defaultValue = this.valueFactory.createValue(rawTag.getDefaultValue(), type.getClass());
-
-            return new JExifTag(rawTag.getCount(), tagNumber, type.getClass(), defaultValue);
+            String name = rawTag.getName();
+            JExifType type = this.typeFactory.createByName(rawTag.getType());
+            int count = rawTag.getCount();
+            JExifValue defaultValue = this.valueFactory.createValue(rawTag.getDefaultValue(), type);
+            return new JExifTag(tagNumber, name, type, count, defaultValue);
         } catch (JExifFactoryException e) {
-            throw new JExifRawTagConverterException(e);
+            throw new JExifTagsRawTagConverterException(e);
         }
     }
 

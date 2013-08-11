@@ -8,7 +8,7 @@ public class JExifValueFactory {
 
     private final static Logger logger = LoggerFactory.getLogger("org.jexif");
 
-    public <T extends JExifType> JExifValue<T> createValue(byte[] bytes, Class<T> clazz) throws JExifFactoryException {
+    public JExifValue createValue(byte[] bytes, JExifType type) throws JExifFactoryException {
         return null;
     }
 }

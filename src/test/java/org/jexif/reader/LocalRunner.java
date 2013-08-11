@@ -2,8 +2,8 @@ package org.jexif.reader;
 
 import org.jexif.api.*;
 import org.jexif.api.type.JExifShort;
-import org.jexif.tags.InMemoryJExifTagsDatabase;
-import org.jexif.tags.JExifTagsDatabase;
+import org.jexif.tags.database.api.JExifTagsDatabase;
+import org.jexif.tags.database.impl.InMemoryJExifTagsDatabase;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -16,12 +16,12 @@ public class LocalRunner {
     public static void main(String[] args) throws JExifException, IOException {
         JExifTagsDatabase database = new InMemoryJExifTagsDatabase();
         JExifTagNumber tagNumber = new JExifTagNumber("a405", 16);
-        JExifTag<JExifShort> tag = database.getTag(tagNumber, JExifShort.class);
+        JExifTag tag = database.getTag(tagNumber, JExifShort.instance);
         System.out.println(String.format("%s", tag));
 
         JExifValueFactory fac = new JExifValueFactory();
-        JExifValue<JExifShort> value = fac.createValue(new byte[]{}, JExifShort.class);
-        JExifEntry<JExifShort> entry = new JExifEntry<>(tag, value);
+        JExifValue value = fac.createValue(new byte[]{}, JExifShort.instance);
+        JExifEntry entry = new JExifEntry(tag, value);
         System.out.println(String.format("%s", entry));
 
         JExifReaderFactory jExifReaderFactory = new JExifReaderFactory();
@@ -33,6 +33,7 @@ public class LocalRunner {
             return;
         }
         DirectoryStream<Path> dir = Files.newDirectoryStream(imgDir, new ImagePathFilter());
+
         for (Path p : dir) {
             System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
             reader.readExifData(p);

@@ -1,9 +1,9 @@
-package org.jexif.tags;
+package org.jexif.tags.database.api;
 
 import org.jexif.api.JExifTag;
 import org.jexif.api.JExifTagNumber;
 import org.jexif.api.type.JExifType;
 
 public interface JExifTagsDatabase {
-    <T extends JExifType> JExifTag<T> getTag(JExifTagNumber tagNumber, Class<T> clazz) throws JExifDatabaseException;
+    JExifTag getTag(JExifTagNumber tagNumber, JExifType type) throws JExifTagsDatabaseException;
 }

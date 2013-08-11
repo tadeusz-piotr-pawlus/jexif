@@ -1,7 +1,5 @@
 package org.jexif.header.raw;
 
-import java.nio.ByteBuffer;
-
 public class RawJExifHeader {
 
     private byte[] byteOrder;
@@ -14,11 +12,11 @@ public class RawJExifHeader {
         offsetOfIFD = new byte[4];
     }
 
-    public RawJExifHeader(ByteBuffer bytes) {
+    public RawJExifHeader(byte[] bytes) {
         this();
-        bytes.get(byteOrder);
-        bytes.get(_42);
-        bytes.get(offsetOfIFD);
+        byteOrder = new byte[]{bytes[0], bytes[1]};
+        _42 = new byte[]{bytes[2], bytes[3]};
+        offsetOfIFD = new byte[]{bytes[4], bytes[5], bytes[6], bytes[7]};
     }
 
     public byte[] getByteOrder() {

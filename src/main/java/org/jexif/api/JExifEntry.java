@@ -1,7 +1,5 @@
 package org.jexif.api;
 
-import org.jexif.api.type.JExifType;
-
 import java.io.Serializable;
 
 /**
@@ -9,20 +7,20 @@ import java.io.Serializable;
  *
  * @author Tadeusz Piotr Pawlus
  */
-public class JExifEntry<T extends JExifType> implements Serializable {
-    private final JExifTag<T> tag;
-    private final JExifValue<T> value;
+public class JExifEntry implements Serializable {
+    private final JExifTag tag;
+    private final JExifValue value;
 
-    public JExifEntry(JExifTag<T> tag, JExifValue<T> value) {
+    public JExifEntry(JExifTag tag, JExifValue value) {
         this.tag = tag;
         this.value = value;
     }
 
-    public JExifTag<T> getTag() {
+    public JExifTag getTag() {
         return tag;
     }
 
-    public JExifValue<T> getValue() {
+    public JExifValue getValue() {
         return value;
     }
 }

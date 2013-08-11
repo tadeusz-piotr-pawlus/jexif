@@ -1,4 +1,4 @@
-package org.jexif.tags;
+package org.jexif.tags.database.impl;
 
 import org.jexif.tags.raw.JExifRawTag;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class RawTagsHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        logger.debug("Creating raw tag: {}.", this.name);
+        logger.debug("Creating raw tag: {} (hex={}, type={}, count={}, defaultValue={}).", this.name, this.number);
 
         JExifRawTag rawTag = new JExifRawTag(name, number, type);
         this.tags.add(rawTag);
