@@ -24,7 +24,6 @@ public class InMemoryJExifTagsDatabase implements JExifTagsDatabase {
 
     public InMemoryJExifTagsDatabase() throws JExifTagsDatabaseException {
         try {
-            JExifRawTagConverter rawTagConverter = new DefaultJExifRawTagConverter(16);
 
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             SAXParser parser = saxParserFactory.newSAXParser();
@@ -34,6 +33,8 @@ public class InMemoryJExifTagsDatabase implements JExifTagsDatabase {
 
             parser.parse(new InputSource(is), handler);
             this.tags = new ArrayList<>();
+
+            JExifRawTagConverter rawTagConverter = new DefaultJExifRawTagConverter(handler.getRadix());
             for (JExifRawTag rawTag : handler.getTags()) {
                 tags.add(rawTagConverter.convert(rawTag));
             }

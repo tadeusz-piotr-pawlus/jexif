@@ -14,17 +14,18 @@ public class RawTagsHandler extends DefaultHandler {
 
     private final static Logger logger = LoggerFactory.getLogger(RawTagsHandler.class);
     private final static String TAG_NAME = "tag";
+    private final static String TAGS_NAME = "tags";
     public static final String NAME = "name";
     public static final String HEX = "hex";
     public static final String TYPE = "type";
+    private static final String RADIX = "radix";
+    private static final String VERSION = "version";
     private Collection<JExifRawTag> tags;
     private String name;
     private String number;
     private String type;
-
-    public RawTagsHandler() {
-
-    }
+    private int radix;
+    private String version;
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
@@ -45,10 +46,21 @@ public class RawTagsHandler extends DefaultHandler {
             this.name = attributes.getValue(NAME);
             this.number = attributes.getValue(HEX);
             this.type = attributes.getValue(TYPE);
+        } else if (TAGS_NAME.equals(qName)) {
+            this.radix = Integer.parseInt(attributes.getValue(RADIX));
+            this.version = attributes.getValue(VERSION);
         }
     }
 
     public Collection<JExifRawTag> getTags() {
         return this.tags;
+    }
+
+    public int getRadix() {
+        return radix;
+    }
+
+    public String getVersion() {
+        return version;
     }
 }

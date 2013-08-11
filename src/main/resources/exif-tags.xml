@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tags xmlns="http://jexif.org/xml/ns/tags" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://jexif.org/xml/ns/tags tags_1_0.xsd" version="1.0">
+      xsi:schemaLocation="http://jexif.org/xml/ns/tags tags_1_0.xsd" version="1.0" radix="16">
     <tag name="Exif IFD Pointer" hex="8769" type="LONG"/>
     <tag name="GPS Info IFD Pointer" hex="8825" type="LONG"/>
     <tag name="Interoperability IFD Pointer" hex="A005" type="LONG"/>

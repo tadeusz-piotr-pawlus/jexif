@@ -26,7 +26,6 @@ public class DefaultBufferProvider implements BufferProvider {
             byte first = bb.get();
             byte second = bb.get();
             while (bb.hasRemaining()) {
-                int position = bb.position();
                 if ((first == LITTLE_ENDIAN && second == LITTLE_ENDIAN) || first == BIG_ENDIAN && second == BIG_ENDIAN) {
                     break;
                 }

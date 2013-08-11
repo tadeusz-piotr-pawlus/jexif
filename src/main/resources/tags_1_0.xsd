@@ -10,6 +10,7 @@
                 <xsd:element ref="tag"/>
             </xsd:sequence>
             <xsd:attribute name="version" type="version-type" use="required"/>
+            <xsd:attribute name="radix" type="radix-type" use="required"/>
         </xsd:complexType>
     </xsd:element>
     <xsd:element name="tag">
@@ -36,6 +37,13 @@
     <xsd:simpleType name="hex-type">
         <xsd:restriction base="xsd:string">
             <xsd:pattern value="[0-9a-fA-F]+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="radix-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="8"/>
+            <xsd:enumeration value="10"/>
+            <xsd:enumeration value="16"/>
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="exif-tag-type">
