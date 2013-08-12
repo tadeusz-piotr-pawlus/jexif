@@ -35,8 +35,12 @@ public class LocalRunner {
         DirectoryStream<Path> dir = Files.newDirectoryStream(imgDir, new ImagePathFilter());
 
         for (Path p : dir) {
-            System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
-            reader.readExifData(p);
+            try {
+                System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
+                reader.readExifData(p);
+            } catch (JExifReaderException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 
