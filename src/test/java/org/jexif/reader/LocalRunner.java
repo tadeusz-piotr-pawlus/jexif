@@ -36,6 +36,7 @@ public class LocalRunner {
 
         for (Path p : dir) {
             try {
+//            Path p = Paths.get("/home/keef/IdeaProjects/jexif/src/test/resources/img/fujifilm-finepix40i.jpg");
                 System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
                 reader.readExifData(p);
             } catch (JExifReaderException ex) {

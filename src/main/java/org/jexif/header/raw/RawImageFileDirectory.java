@@ -4,15 +4,16 @@ import java.nio.ByteBuffer;
 
 public class RawImageFileDirectory {
 
-    public static final int EXIF_ROW_LENGTH = 16;
     private short numberOfInteroperability;
-    private byte[] data;
+    private RawExifEntry[] data;
     private short nextIFDOffset;
 
     public RawImageFileDirectory(ByteBuffer img) {
         numberOfInteroperability = img.getShort();
-        data = new byte[EXIF_ROW_LENGTH * numberOfInteroperability];
-        img.get(data);
+        data = new RawExifEntry[numberOfInteroperability];
+        for (int i = 0; i < numberOfInteroperability; i++) {
+            data[i] = new RawExifEntry(img);
+        }
         nextIFDOffset = img.getShort();
     }
 
@@ -20,7 +21,7 @@ public class RawImageFileDirectory {
         return numberOfInteroperability;
     }
 
-    public byte[] getData() {
+    public RawExifEntry[] getData() {
         return data;
     }
 

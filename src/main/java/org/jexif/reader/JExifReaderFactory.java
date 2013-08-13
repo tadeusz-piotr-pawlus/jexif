@@ -38,11 +38,16 @@ public class JExifReaderFactory {
                 if (!jexifHeader.isValid()) {
                     throw new JExifReaderException("Tiff Header is not valid!");
                 }
-                img.position(jexifHeader.getOffsetOfIFD());
+
+                int nextIFD = jexifHeader.getOffsetOfIFD();
                 img.order(jexifHeader.getByteOrder());
-                RawImageFileDirectory _0thIFD = new RawImageFileDirectory(img);
-                System.out.println(_0thIFD.getNumberOfInteroperability());
-                System.out.println(_0thIFD.getNextIFDOffset());
+                while (nextIFD != 0) {
+                    img.position(nextIFD);
+                    RawImageFileDirectory ifd = new RawImageFileDirectory(img);
+                    System.out.println("Entries: " + ifd.getNumberOfInteroperability());
+                    System.out.println("Next IFD block: " + ifd.getNextIFDOffset());
+                    nextIFD = ifd.getNextIFDOffset();
+                }
             } catch (JExifHeaderException e) {
                 throw new JExifReaderException(e);
             }
