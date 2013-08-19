@@ -2,9 +2,9 @@ package org.jexif.reader;
 
 import org.jexif.api.JExifData;
 
-import java.nio.file.Path;
+import java.nio.ByteBuffer;
 
 public interface JExifReader {
 
-    JExifData readExifData(Path path) throws JExifReaderException;
+    JExifData readExifData(ByteBuffer image) throws JExifReaderException;
 }

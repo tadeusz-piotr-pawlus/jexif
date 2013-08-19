@@ -2,10 +2,12 @@ package org.jexif.reader;
 
 import org.jexif.api.*;
 import org.jexif.api.type.JExifShort;
+import org.jexif.reader.buffer.impl.ExtensionBasedBufferProvider;
 import org.jexif.tags.database.api.JExifTagsDatabase;
 import org.jexif.tags.database.impl.InMemoryJExifTagsDatabase;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,18 +29,21 @@ public class LocalRunner {
         JExifReaderFactory jExifReaderFactory = new JExifReaderFactory();
         JExifReader reader = jExifReaderFactory.createJExifReader();
 
-        Path imgDir = Paths.get("src/test/resources/img/");
+        Path imgDir = Paths.get("src/test/resources/image/");
         imgDir = imgDir.normalize();
         if (!(Files.exists(imgDir) && Files.isDirectory(imgDir) && Files.isReadable(imgDir))) {
             return;
         }
         DirectoryStream<Path> dir = Files.newDirectoryStream(imgDir, new ImagePathFilter());
 
+        ExtensionBasedBufferProvider ebbp = new ExtensionBasedBufferProvider();
+
         for (Path p : dir) {
             try {
-//            Path p = Paths.get("/home/keef/IdeaProjects/jexif/src/test/resources/img/fujifilm-finepix40i.jpg");
+//            Path p = Paths.get("/home/keef/IdeaProjects/jexif/src/test/resources/image/fujifilm-finepix40i.jpg");
                 System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
-                reader.readExifData(p);
+                ByteBuffer image = ebbp.getByteBuffer(p);
+                reader.readExifData(image);
             } catch (JExifReaderException ex) {
                 System.out.println(ex.getMessage());
             }
@@ -49,7 +54,7 @@ public class LocalRunner {
 
         @Override
         public boolean accept(Path entry) throws IOException {
-            return entry.getFileName().toString().endsWith("jpg");
+            return entry.getFileName().toString().toLowerCase().endsWith("jpg");
         }
     }
 }

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class JExifValueFactory {
 
-    private final static Logger logger = LoggerFactory.getLogger("org.jexif");
+    private final static Logger logger = LoggerFactory.getLogger(JExifValueFactory.class);
 
     public JExifValue createValue(byte[] bytes, JExifType type) throws JExifFactoryException {
         return null;

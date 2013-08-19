@@ -5,14 +5,16 @@ import org.jexif.header.JExifHeader;
 import org.jexif.header.JExifHeaderException;
 import org.jexif.header.raw.RawImageFileDirectory;
 import org.jexif.header.raw.RawJExifHeader;
-import org.jexif.reader.buffer.api.BufferProvider;
-import org.jexif.reader.impl.DefaultBufferProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
-import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JExifReaderFactory {
 
+    private final static Logger logger = LoggerFactory.getLogger(JExifReaderFactory.class);
 
     public JExifReader createJExifReader() throws JExifReaderFactoryException {
         return new DefaultJExifReader();
@@ -21,37 +23,37 @@ public class JExifReaderFactory {
     private final static class DefaultJExifReader implements JExifReader {
 
         private static final int TIFF_HEADER_SIZE = 8;
-        private final BufferProvider bufferProvider;
 
         DefaultJExifReader() {
-            this.bufferProvider = new DefaultBufferProvider();
         }
 
         @Override
-        public JExifData readExifData(Path path) throws JExifReaderException {
+        public JExifData readExifData(ByteBuffer image) throws JExifReaderException {
             try {
-                ByteBuffer img = this.bufferProvider.getByteBuffer(path);
                 byte[] header = new byte[TIFF_HEADER_SIZE];
-                img.get(header);
+                image.get(header);
                 RawJExifHeader rawHeader = new RawJExifHeader(header);
-                JExifHeader jexifHeader = new JExifHeader(rawHeader);
-                if (!jexifHeader.isValid()) {
+                JExifHeader tiffHeader = new JExifHeader(rawHeader);
+                if (!tiffHeader.isValid()) {
                     throw new JExifReaderException("Tiff Header is not valid!");
                 }
-
-                int nextIFD = jexifHeader.getOffsetOfIFD();
-                img.order(jexifHeader.getByteOrder());
+                List<RawImageFileDirectory> listOfIFD = new ArrayList<>();
+                int nextIFD = tiffHeader.getOffsetOfIFD();
+                logger.debug("First IFD block offset: {}", tiffHeader.getOffsetOfIFD());
+                image.order(tiffHeader.getByteOrder());
                 while (nextIFD != 0) {
-                    img.position(nextIFD);
-                    RawImageFileDirectory ifd = new RawImageFileDirectory(img);
-                    System.out.println("Entries: " + ifd.getNumberOfInteroperability());
-                    System.out.println("Next IFD block: " + ifd.getNextIFDOffset());
+                    image.position(nextIFD);
+                    RawImageFileDirectory ifd = new RawImageFileDirectory(image);
+                    listOfIFD.add(ifd);
                     nextIFD = ifd.getNextIFDOffset();
+                    logger.debug("Entries: {} ", ifd.getNumberOfInteroperability());
+                    logger.debug("Next IFD block offset: {}", ifd.getNextIFDOffset());
                 }
+                logger.debug("Number of IFD blocks: {}", listOfIFD.size());
+                return null;
             } catch (JExifHeaderException e) {
                 throw new JExifReaderException(e);
             }
-            return null;
         }
     }
 }
