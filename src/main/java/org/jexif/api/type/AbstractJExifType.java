@@ -19,4 +19,9 @@ public abstract class AbstractJExifType implements JExifType {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

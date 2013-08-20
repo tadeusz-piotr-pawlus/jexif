@@ -41,11 +41,6 @@ public class JExifTag implements Serializable {
 
     @Override
     public String toString() {
-        return "JExifTag{" +
-                "tagNumber=" + tagNumber +
-                ", count=" + count +
-                ", type=" + type +
-                ", defaultValue=" + defaultValue +
-                '}';
+        return getName();
     }
 }

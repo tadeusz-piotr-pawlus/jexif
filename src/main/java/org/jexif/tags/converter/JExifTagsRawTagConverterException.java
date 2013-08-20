@@ -1,8 +1,8 @@
 package org.jexif.tags.converter;
 
-import org.jexif.tags.database.api.JExifTagsDatabaseException;
+import org.jexif.entry.converter.JExifConverterException;
 
-public class JExifTagsRawTagConverterException extends JExifTagsDatabaseException {
+public class JExifTagsRawTagConverterException extends JExifConverterException {
     public JExifTagsRawTagConverterException() {
     }
 

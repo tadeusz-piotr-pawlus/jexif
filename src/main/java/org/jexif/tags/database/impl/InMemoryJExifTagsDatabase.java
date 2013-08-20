@@ -3,8 +3,8 @@ package org.jexif.tags.database.impl;
 import org.jexif.api.JExifTag;
 import org.jexif.api.JExifTagNumber;
 import org.jexif.api.type.JExifType;
-import org.jexif.tags.converter.DefaultJExifRawTagConverter;
 import org.jexif.tags.converter.JExifRawTagConverter;
+import org.jexif.tags.converter.JExifTagsRawTagConverterException;
 import org.jexif.tags.database.api.JExifTagsDatabase;
 import org.jexif.tags.database.api.JExifTagsDatabaseException;
 import org.jexif.tags.raw.JExifRawTag;
@@ -34,11 +34,11 @@ public class InMemoryJExifTagsDatabase implements JExifTagsDatabase {
             parser.parse(new InputSource(is), handler);
             this.tags = new ArrayList<>();
 
-            JExifRawTagConverter rawTagConverter = new DefaultJExifRawTagConverter(handler.getRadix());
+            JExifRawTagConverter rawTagConverter = new JExifRawTagConverter(handler.getRadix());
             for (JExifRawTag rawTag : handler.getTags()) {
                 tags.add(rawTagConverter.convert(rawTag));
             }
-        } catch (ParserConfigurationException | SAXException | IOException ex) {
+        } catch (ParserConfigurationException | SAXException | IOException | JExifTagsRawTagConverterException ex) {
             throw new JExifTagsDatabaseException(ex);
         }
     }

@@ -1,10 +1,7 @@
 package org.jexif.reader;
 
-import org.jexif.api.*;
-import org.jexif.api.type.JExifShort;
+import org.jexif.api.JExifException;
 import org.jexif.reader.buffer.impl.ExtensionBasedBufferProvider;
-import org.jexif.tags.database.api.JExifTagsDatabase;
-import org.jexif.tags.database.impl.InMemoryJExifTagsDatabase;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -16,16 +13,6 @@ import java.nio.file.Paths;
 public class LocalRunner {
 
     public static void main(String[] args) throws JExifException, IOException {
-        JExifTagsDatabase database = new InMemoryJExifTagsDatabase();
-        JExifTagNumber tagNumber = new JExifTagNumber("a405", 16);
-        JExifTag tag = database.getTag(tagNumber, JExifShort.instance);
-        System.out.println(String.format("%s", tag));
-
-        JExifValueFactory fac = new JExifValueFactory();
-        JExifValue value = fac.createValue(new byte[]{}, JExifShort.instance);
-        JExifEntry entry = new JExifEntry(tag, value);
-        System.out.println(String.format("%s", entry));
-
         JExifReaderFactory jExifReaderFactory = new JExifReaderFactory();
         JExifReader reader = jExifReaderFactory.createJExifReader();
 
