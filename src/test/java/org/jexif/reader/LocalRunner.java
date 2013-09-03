@@ -1,7 +1,11 @@
 package org.jexif.reader;
 
 import org.jexif.api.JExifException;
-import org.jexif.reader.buffer.impl.ExtensionBasedBufferProvider;
+import org.jexif.api.JExifProvider;
+import org.jexif.api.reader.JExifReader;
+import org.jexif.api.reader.JExifReaderException;
+import org.jexif.api.reader.JExifReaderFactory;
+import org.jexif.reader.oop.buffer.impl.ExtensionBasedBufferProvider;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -13,7 +17,8 @@ import java.nio.file.Paths;
 public class LocalRunner {
 
     public static void main(String[] args) throws JExifException, IOException {
-        JExifReaderFactory jExifReaderFactory = new JExifReaderFactory();
+        JExifProvider provider;
+        JExifReaderFactory jExifReaderFactory = new DefaultJExifReaderFactory();
         JExifReader reader = jExifReaderFactory.createJExifReader();
 
         Path imgDir = Paths.get("src/test/resources/image/");
