@@ -1,8 +1,8 @@
 package org.jexif.entry.converter;
 
-import org.jexif.api.type.JExifType;
-import org.jexif.api.type.JExifTypeFactory;
-import org.jexif.api.type.JExifTypeFactoryException;
+import org.jexif.api.common.type.JExifType;
+import org.jexif.api.common.type.JExifTypeFactory;
+import org.jexif.api.common.type.JExifTypeFactoryException;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

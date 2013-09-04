@@ -4,5 +4,5 @@ import java.nio.ByteBuffer;
 
 public interface JExifReader {
 
-    JExifData readExifData(ByteBuffer image) throws JExifReaderException;
+    JExifReaderData readExifData(ByteBuffer image) throws JExifReaderException;
 }

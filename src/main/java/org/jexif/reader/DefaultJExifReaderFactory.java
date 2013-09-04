@@ -1,15 +1,18 @@
 package org.jexif.reader;
 
 import org.jexif.api.common.JExifHeader;
+import org.jexif.api.common.JExifTag;
+import org.jexif.api.common.JExifValue;
 import org.jexif.api.reader.*;
 import org.jexif.reader.oop.header.JExifHeaderFactory;
-import org.jexif.reader.raw.RawImageFileDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DefaultJExifReaderFactory implements JExifReaderFactory {
 
@@ -29,27 +32,51 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
         }
 
         @Override
-        public JExifData readExifData(ByteBuffer image) throws JExifReaderException {
-            byte[] header = new byte[TIFF_HEADER_SIZE];
-            image.get(header);
-            JExifHeader tiffHeader = this.headerFactory.buildHeader(header);
+        public JExifReaderData readExifData(ByteBuffer image) throws JExifReaderException {
+            byte[] headerBuffer = new byte[TIFF_HEADER_SIZE];
+            image.get(headerBuffer);
+            JExifHeader tiffHeader = this.headerFactory.buildHeader(headerBuffer);
             if (!tiffHeader.isValid()) {
                 throw new JExifReaderException("Tiff Header is not valid!");
             }
-            List<RawImageFileDirectory> listOfIFD = new ArrayList<>();
+            DefaultJExifReaderData exifReaderData = new DefaultJExifReaderData();
             int nextIFD = tiffHeader.getOffsetOfIFD();
-            logger.debug("First IFD block offset: {}", tiffHeader.getOffsetOfIFD());
             image.order(tiffHeader.getByteOrder());
             while (nextIFD != 0) {
+                logger.debug("IFD block offset: {}", nextIFD);
                 image.position(nextIFD);
-                RawImageFileDirectory ifd = new RawImageFileDirectory(image);
-                listOfIFD.add(ifd);
-                nextIFD = ifd.getNextIFDOffset();
-                logger.debug("Entries: {} ", ifd.getNumberOfInteroperability());
-                logger.debug("Next IFD block offset: {}", ifd.getNextIFDOffset());
+                int entriesNo = image.getShort();
+                for (int i = 0; i < entriesNo; i++) {
+                    byte[] data = new byte[12];
+                    image.get(data);
+                    exifReaderData.put(null, null);
+                }
+                nextIFD = image.getShort();
             }
-            logger.debug("Number of IFD blocks: {}", listOfIFD.size());
+            return exifReaderData;
+        }
+    }
+
+    private static class DefaultJExifReaderData implements JExifReaderData {
+
+        private final Map<JExifTag, JExifEntry> tags;
+
+        public DefaultJExifReaderData() {
+            this.tags = new HashMap<>();
+        }
+
+        @Override
+        public JExifValue getValueFor(JExifTag tag) {
             return null;
+        }
+
+        @Override
+        public Collection<JExifTag> getTags() {
+            return Collections.unmodifiableCollection(this.tags.keySet());
+        }
+
+        public void put(JExifTag tag, JExifEntry entry) {
+            tags.put(tag, entry);
         }
     }
 }

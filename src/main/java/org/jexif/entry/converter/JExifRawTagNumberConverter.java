@@ -1,6 +1,6 @@
 package org.jexif.entry.converter;
 
-import org.jexif.api.JExifTagNumber;
+import org.jexif.api.common.JExifTagNumber;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

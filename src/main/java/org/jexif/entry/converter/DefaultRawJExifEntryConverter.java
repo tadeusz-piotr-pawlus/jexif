@@ -1,13 +1,13 @@
 package org.jexif.entry.converter;
 
-import org.jexif.api.JExifTag;
-import org.jexif.api.JExifTagNumber;
-import org.jexif.api.type.JExifType;
-import org.jexif.api.type.JExifTypeFactory;
+import org.jexif.api.common.JExifTag;
+import org.jexif.api.common.JExifTagNumber;
+import org.jexif.api.common.type.JExifType;
+import org.jexif.api.common.type.JExifTypeFactory;
 import org.jexif.entry.JExifEntry;
 import org.jexif.entry.raw.RawJExifEntry;
-import org.jexif.tags.database.api.JExifTagsDatabase;
-import org.jexif.tags.database.api.JExifTagsDatabaseException;
+import org.jexif.reader.tag.database.api.JExifTagsDatabase;
+import org.jexif.reader.tag.database.api.JExifTagsDatabaseException;
 
 import java.nio.ByteOrder;
 

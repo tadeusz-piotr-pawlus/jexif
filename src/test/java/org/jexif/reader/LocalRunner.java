@@ -3,6 +3,7 @@ package org.jexif.reader;
 import org.jexif.api.JExifException;
 import org.jexif.api.JExifProvider;
 import org.jexif.api.reader.JExifReader;
+import org.jexif.api.reader.JExifReaderData;
 import org.jexif.api.reader.JExifReaderException;
 import org.jexif.api.reader.JExifReaderFactory;
 import org.jexif.reader.oop.buffer.impl.ExtensionBasedBufferProvider;
@@ -35,7 +36,8 @@ public class LocalRunner {
 //            Path p = Paths.get("/home/keef/IdeaProjects/jexif/src/test/resources/image/fujifilm-finepix40i.jpg");
                 System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
                 ByteBuffer image = ebbp.getByteBuffer(p);
-                reader.readExifData(image);
+                JExifReaderData data = reader.readExifData(image);
+                System.out.println(String.format("All tags in file: %s.", data.getTags().size()));
             } catch (JExifReaderException ex) {
                 System.out.println(ex.getMessage());
             }

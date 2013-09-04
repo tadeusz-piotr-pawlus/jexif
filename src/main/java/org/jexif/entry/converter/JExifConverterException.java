@@ -1,6 +1,6 @@
 package org.jexif.entry.converter;
 
-import org.jexif.reader.JExifReaderException;
+import org.jexif.api.reader.JExifReaderException;
 
 public class JExifConverterException extends JExifReaderException {
     public JExifConverterException() {
