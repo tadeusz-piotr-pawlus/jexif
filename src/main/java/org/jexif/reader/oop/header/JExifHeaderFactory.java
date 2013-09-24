@@ -16,7 +16,11 @@ public class JExifHeaderFactory {
         ByteOrder byteOrder = getByteOrder(first, second);
         short magicNumber = getMagicNumber(data, byteOrder);
         int offsetOfIFD = getOffsetOfFirstIFD(data, byteOrder);
-        return new JExifHeader(byteOrder, magicNumber, offsetOfIFD);
+        JExifHeader header = new JExifHeader(byteOrder, magicNumber, offsetOfIFD);
+        if (!header.isValid()) {
+            throw new JExifHeaderFactoryException("Tiff Header is not valid!");
+        }
+        return header;
     }
 
     private int getOffsetOfFirstIFD(byte[] data, ByteOrder byteOrder) {

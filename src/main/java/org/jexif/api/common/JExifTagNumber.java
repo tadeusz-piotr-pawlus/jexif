@@ -7,11 +7,15 @@ public class JExifTagNumber implements Serializable {
     private final int number;
 
     public JExifTagNumber(short number, int radix) {
-        this.number = new BigInteger("" + number, radix).intValue();
+        this("" + number, radix);
     }
 
     public JExifTagNumber(String number, int radix) {
-        this.number = new BigInteger(number, radix).intValue();
+        BigInteger n = new BigInteger(number, radix);
+        if (n.intValue() < 0) {
+            n = n.add(new BigInteger("10000", 16));
+        }
+        this.number = n.intValue();
     }
 
     public String toHexString() {
