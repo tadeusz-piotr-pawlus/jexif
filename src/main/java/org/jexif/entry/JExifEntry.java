@@ -5,10 +5,10 @@ import org.jexif.api.common.JExifValue;
 import org.jexif.api.common.type.JExifType;
 
 public class JExifEntry {
-    private JExifTag tag;
-    private JExifType type;
-    private short count;
-    private JExifValue value;
+    private final JExifTag tag;
+    private final JExifType type;
+    private final short count;
+    private final JExifValue value;
 
     public JExifEntry(JExifTag tag, JExifType type, short count, JExifValue value) {
         this.tag = tag;

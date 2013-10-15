@@ -4,7 +4,7 @@ import org.jexif.api.common.type.JExifType;
 
 public class JExifValue {
 
-    private JExifType type;
+    private final JExifType type;
 
     public JExifValue(JExifType type) {
         this.type = type;

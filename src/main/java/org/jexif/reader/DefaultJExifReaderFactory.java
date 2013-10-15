@@ -2,16 +2,10 @@ package org.jexif.reader;
 
 import org.jexif.api.common.JExifHeader;
 import org.jexif.api.common.JExifTag;
-import org.jexif.api.common.JExifTagNumber;
 import org.jexif.api.common.JExifValue;
-import org.jexif.api.common.type.JExifType;
-import org.jexif.api.common.type.JExifTypeFactory;
-import org.jexif.api.common.type.JExifTypeFactoryException;
 import org.jexif.api.reader.*;
 import org.jexif.reader.oop.header.JExifHeaderFactory;
-import org.jexif.reader.tag.database.api.JExifTagsDatabase;
 import org.jexif.reader.tag.database.api.JExifTagsDatabaseException;
-import org.jexif.reader.tag.database.impl.InMemoryJExifTagsDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,15 +35,11 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
 
         private static final int TIFF_HEADER_SIZE = 8;
         private JExifHeaderFactory headerFactory;
-        private JExifTagNumberFactory tagNumberFactory;
-        private JExifTypeFactory typeFactory;
-        private JExifTagsDatabase tagsDatabase;
+        private JExifEntryFactory entryFactory;
 
         DefaultJExifReader() throws JExifTagsDatabaseException {
             this.headerFactory = new JExifHeaderFactory();
-            this.tagNumberFactory = new JExifTagNumberFactory();
-            this.typeFactory = new JExifTypeFactory();
-            this.tagsDatabase = new InMemoryJExifTagsDatabase();
+            this.entryFactory = new JExifEntryFactory();
         }
 
         @Override
@@ -70,17 +60,11 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
                         byte[] data = new byte[12];
                         image.get(data);
                         ByteBuffer bb = ByteBuffer.wrap(data).order(bo);
-                        JExifTagNumber tagNumber = tagNumberFactory.createNumber(bb);
-                        JExifType type = typeFactory.createById(bb.getShort());
-                        short count = (short) bb.getInt();
-                        JExifTag tag = tagsDatabase.getTag(tagNumber, type);
-                        exifReaderData.put(tag, new JExifEntry(tag, type, count, null));
-                    } catch (JExifTypeFactoryException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    } catch (JExifTagsDatabaseException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        JExifEntry entry = entryFactory.createEntry(bb);
+                        exifReaderData.put(entry);
+                    } catch (JExifReaderFactoryException e) {
+                        e.printStackTrace();
                     }
-
                 }
                 nextIFD = image.getShort();
             }
@@ -106,8 +90,8 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
             return Collections.unmodifiableCollection(this.tags.keySet());
         }
 
-        public void put(JExifTag tag, JExifEntry entry) {
-            tags.put(tag, entry);
+        public void put(JExifEntry entry) {
+            tags.put(entry.getTag(), entry);
         }
     }
 }
