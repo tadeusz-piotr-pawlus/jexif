@@ -17,8 +17,8 @@ public class JExifHeaderFactory {
         short magicNumber = getMagicNumber(data, byteOrder);
         int offsetOfIFD = getOffsetOfFirstIFD(data, byteOrder);
         JExifHeader header = new JExifHeader(byteOrder, magicNumber, offsetOfIFD);
-        if (!header.isValid()) {
-            throw new JExifHeaderFactoryException("Tiff Header is not valid!");
+        if (header.isValid()) {
+            throw new JExifHeaderFactoryException("Header is not valid!");
         }
         return header;
     }

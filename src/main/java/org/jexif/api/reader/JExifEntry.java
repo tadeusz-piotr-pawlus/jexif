@@ -15,7 +15,7 @@ public class JExifEntry implements Serializable {
     private final JExifTag tag;
     private final JExifValue value;
 
-    public JExifEntry(JExifTag tag, JExifType type, short count, JExifValue value) {
+    public JExifEntry(JExifTag tag, JExifType type, JExifValue value) {
         this.tag = tag;
         this.value = value;
     }

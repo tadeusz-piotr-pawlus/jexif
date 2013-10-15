@@ -4,4 +4,6 @@ public interface JExifType {
     short getId();
 
     String getName();
+
+    short getBytesNumber();
 }

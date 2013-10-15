@@ -29,12 +29,11 @@ public class JExifEntryFactory {
 
     public JExifEntry createEntry(ByteBuffer bb) throws JExifReaderFactoryException {
         try {
-            JExifTagNumber tagNumber = tagNumberFactory.createNumber(bb);
+            JExifTagNumber tagNumber = tagNumberFactory.createNumber(bb.getShort());
             JExifType type = typeFactory.createById(bb.getShort());
-            short count = (short) bb.getInt();
+            JExifValue value = valueFactory.createValue(type, bb);
             JExifTag tag = tagsDatabase.getTag(tagNumber, type);
-            JExifValue value = valueFactory.createValue(bb);
-            return new JExifEntry(tag, type, count, value);
+            return new JExifEntry(tag, type, value);
         } catch (JExifException ex) {
             throw new JExifReaderFactoryException(ex);
         }

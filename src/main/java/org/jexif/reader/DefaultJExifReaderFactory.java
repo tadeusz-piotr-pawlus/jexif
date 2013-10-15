@@ -57,10 +57,7 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
                 int entriesNo = image.getShort();
                 for (int i = 0; i < entriesNo; i++) {
                     try {
-                        byte[] data = new byte[12];
-                        image.get(data);
-                        ByteBuffer bb = ByteBuffer.wrap(data).order(bo);
-                        JExifEntry entry = entryFactory.createEntry(bb);
+                        JExifEntry entry = entryFactory.createEntry(image);
                         exifReaderData.put(entry);
                     } catch (JExifReaderFactoryException e) {
                         e.printStackTrace();

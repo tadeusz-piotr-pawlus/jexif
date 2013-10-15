@@ -6,6 +6,10 @@ import java.math.BigInteger;
 public class JExifTagNumber implements Serializable {
     private final int number;
 
+    public JExifTagNumber(short number) {
+        this(number, 10);
+    }
+
     public JExifTagNumber(short number, int radix) {
         this("" + number, radix);
     }
