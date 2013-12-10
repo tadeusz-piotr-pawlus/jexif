@@ -18,8 +18,8 @@ import java.nio.file.Paths;
 public class LocalReader {
 
     public static void main(String[] args) throws JExifException, IOException {
-        JExifProvider provider;
-        JExifReaderFactory jExifReaderFactory = new DefaultJExifReaderFactory();
+        JExifProvider provider = JExifProvider.provider();
+        JExifReaderFactory jExifReaderFactory = provider.createJExifReaderFactory();
         JExifReader reader = jExifReaderFactory.createJExifReader();
 
         Path imgDir = Paths.get("src/test/resources/image/");
