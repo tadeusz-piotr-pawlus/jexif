@@ -63,13 +63,7 @@ public abstract class JExifProvider {
             Class<?> c = Class.forName(cn, true, ClassLoader.getSystemClassLoader());
             provider = (JExifProvider)c.newInstance();
             return true;
-        } catch (ClassNotFoundException x) {
-            throw new ServiceConfigurationError(null, x);
-        } catch (IllegalAccessException x) {
-            throw new ServiceConfigurationError(null, x);
-        } catch (InstantiationException x) {
-            throw new ServiceConfigurationError(null, x);
-        } catch (SecurityException x) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SecurityException x) {
             throw new ServiceConfigurationError(null, x);
         }
     }

@@ -5,12 +5,12 @@ import org.jexif.api.common.JExifTag;
 import org.jexif.api.common.JExifValue;
 import org.jexif.api.reader.*;
 import org.jexif.reader.oop.header.JExifHeaderFactory;
+import org.jexif.reader.oop.header.JExifHeaderFactoryException;
 import org.jexif.reader.tag.database.api.JExifTagsDatabaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
     private final static class DefaultJExifReader implements JExifReader {
 
         private static final int TIFF_HEADER_SIZE = 8;
-        private JExifHeaderFactory headerFactory;
+        private final JExifHeaderFactory headerFactory;
         private JExifEntryFactory entryFactory;
 
         DefaultJExifReader() throws JExifTagsDatabaseException {
@@ -44,28 +44,39 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
 
         @Override
         public JExifReaderData readExifData(ByteBuffer image) throws JExifReaderException {
-            byte[] headerBuffer = new byte[TIFF_HEADER_SIZE];
-            image.get(headerBuffer);
-            JExifHeader tiffHeader = this.headerFactory.buildHeader(headerBuffer);
+            JExifHeader header = getExifHeader(image);
+            image.order(header.getByteOrder());
+            return getExifReaderData(image, header.getOffsetOfIFD());
+        }
+
+        private DefaultJExifReaderData getExifReaderData(ByteBuffer image, int firstOffsetOfIFD) {
             DefaultJExifReaderData exifReaderData = new DefaultJExifReaderData();
-            int nextIFD = tiffHeader.getOffsetOfIFD();
-            ByteOrder bo = tiffHeader.getByteOrder();
-            image.order(bo);
-            while (nextIFD != 0) {
-                logger.debug("IFD block offset: {}", nextIFD);
-                image.position(nextIFD);
-                int entriesNo = image.getShort();
-                for (int i = 0; i < entriesNo; i++) {
-                    try {
-                        JExifEntry entry = entryFactory.createEntry(image);
-                        exifReaderData.put(entry);
-                    } catch (JExifReaderFactoryException e) {
-                        e.printStackTrace();
-                    }
-                }
-                nextIFD = image.getShort();
+            int ifdOffset = firstOffsetOfIFD;
+            while (ifdOffset != 0) {
+                logger.debug("IFD block offset: {}", ifdOffset);
+                image.position(ifdOffset);
+                getExifEntriesFromIFD(image, exifReaderData);
+                ifdOffset = image.getShort();
             }
             return exifReaderData;
+        }
+
+        private void getExifEntriesFromIFD(ByteBuffer image, DefaultJExifReaderData exifReaderData) {
+            int entriesNo = image.getShort();
+            for (int i = 0; i < entriesNo; i++) {
+                try {
+                    JExifEntry entry = entryFactory.createEntry(image);
+                    exifReaderData.put(entry);
+                } catch (JExifReaderFactoryException e) {
+                    logger.error("Unable to create Exif Entry starting at {}. Continuing...", image.position());
+                }
+            }
+        }
+
+        private JExifHeader getExifHeader(ByteBuffer image) throws JExifHeaderFactoryException {
+            byte[] headerBuffer = new byte[TIFF_HEADER_SIZE];
+            image.get(headerBuffer);
+            return this.headerFactory.buildHeader(headerBuffer);
         }
     }
 
