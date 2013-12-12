@@ -2,7 +2,6 @@ package org.jexif.api.reader;
 
 import org.jexif.api.common.JExifTag;
 import org.jexif.api.common.JExifValue;
-import org.jexif.api.common.type.JExifType;
 
 import java.io.Serializable;
 
@@ -15,7 +14,7 @@ public class JExifEntry implements Serializable {
     private final JExifTag tag;
     private final JExifValue value;
 
-    public JExifEntry(JExifTag tag, JExifType type, JExifValue value) {
+    public JExifEntry(JExifTag tag, JExifValue value) {
         this.tag = tag;
         this.value = value;
     }

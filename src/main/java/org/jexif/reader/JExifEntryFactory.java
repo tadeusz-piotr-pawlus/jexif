@@ -31,9 +31,9 @@ public class JExifEntryFactory {
         try {
             JExifTagNumber tagNumber = tagNumberFactory.createNumber(bb.getShort());
             JExifType type = typeFactory.createById(bb.getShort());
-            JExifValue value = valueFactory.createValue(type, bb);
             JExifTag tag = tagsDatabase.getTag(tagNumber, type);
-            return new JExifEntry(tag, type, value);
+            JExifValue value = valueFactory.createValue(tag, bb);
+            return new JExifEntry(tag, value);
         } catch (JExifTypeFactoryException | JExifTagsDatabaseException ex) {
             throw new JExifReaderFactoryException(ex);
         }

@@ -1,7 +1,7 @@
 package org.jexif.reader;
 
 import org.jexif.api.common.JExifHeader;
-import org.jexif.api.common.JExifTag;
+import org.jexif.api.common.JExifTagNumber;
 import org.jexif.api.common.JExifValue;
 import org.jexif.api.reader.*;
 import org.jexif.reader.oop.header.JExifHeaderFactory;
@@ -82,24 +82,27 @@ public class DefaultJExifReaderFactory implements JExifReaderFactory {
 
     private static class DefaultJExifReaderData implements JExifReaderData {
 
-        private final Map<JExifTag, JExifEntry> tags;
+        private final Map<JExifTagNumber, JExifEntry> tags;
 
         public DefaultJExifReaderData() {
             this.tags = new HashMap<>();
         }
 
         @Override
-        public JExifValue getValueFor(JExifTag tag) {
-            return null;
+        public JExifValue getValueFor(JExifTagNumber tag) throws JExifReaderException {
+            if (tags.containsKey(tag)) {
+                return tags.get(tag).getValue();
+            }
+            throw new JExifReaderException("No tag with number " + tag.getNumber() + " defined");
         }
 
         @Override
-        public Collection<JExifTag> getTags() {
+        public Collection<JExifTagNumber> getTagNumbers() {
             return Collections.unmodifiableCollection(this.tags.keySet());
         }
 
         public void put(JExifEntry entry) {
-            tags.put(entry.getTag(), entry);
+            tags.put(entry.getTag().getTagNumber(), entry);
         }
     }
 }

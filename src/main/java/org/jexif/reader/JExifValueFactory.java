@@ -1,7 +1,7 @@
 package org.jexif.reader;
 
+import org.jexif.api.common.JExifTag;
 import org.jexif.api.common.JExifValue;
-import org.jexif.api.common.type.JExifType;
 import org.jexif.api.reader.JExifReaderFactoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +11,23 @@ import java.nio.ByteBuffer;
 public class JExifValueFactory {
     private final static Logger logger = LoggerFactory.getLogger(JExifValueFactory.class);
 
-    public JExifValue createValue(JExifType type, ByteBuffer bb) throws JExifReaderFactoryException {
+    public JExifValue createValue(JExifTag tag, ByteBuffer bb) throws JExifReaderFactoryException {
+        byte[] value;
         int count = bb.getInt();
-        int val = bb.getInt();
-        if (type.getBytesNumber() * count > 4) {
+        int bytesNo = tag.getType().getBytesNumber() * count;
+        if (bytesNo > 4) {
             //value is offset pointing to 'real' value
+            int offset = bb.getInt();
+            int mementoPosition = bb.position();
+            bb.position(offset);
+            value = new byte[bytesNo];
+            bb.get(value);
+            bb.position(mementoPosition);
         } else {
             //value is here
+            value = new byte[4];
+            bb.get(value);
         }
-        return null;
+        return new JExifValue(tag, value);
     }
 }

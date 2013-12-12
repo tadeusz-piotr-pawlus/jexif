@@ -1,16 +1,20 @@
 package org.jexif.api.common;
 
-import org.jexif.api.common.type.JExifType;
-
 public class JExifValue {
 
-    private final JExifType type;
+    private final JExifTag tag;
+    private final byte[] value;
 
-    public JExifValue(JExifType type) {
-        this.type = type;
+    public JExifValue(JExifTag tag, byte[] value) {
+        this.tag = tag;
+        this.value = value;
     }
 
-    public JExifType getType() {
-        return type;
+    public byte[] getValue() {
+        return value;
+    }
+
+    public JExifTag getTag() {
+        return tag;
     }
 }

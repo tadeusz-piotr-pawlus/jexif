@@ -2,6 +2,10 @@ package org.jexif.reader;
 
 import org.jexif.api.JExifException;
 import org.jexif.api.JExifProvider;
+import org.jexif.api.common.JExifTag;
+import org.jexif.api.common.JExifTagNumber;
+import org.jexif.api.common.JExifValue;
+import org.jexif.api.common.type.JExifAscii;
 import org.jexif.api.reader.JExifReader;
 import org.jexif.api.reader.JExifReaderData;
 import org.jexif.api.reader.JExifReaderException;
@@ -47,19 +51,29 @@ public class LocalReader {
 
         DirectoryStream<Path> dir = Files.newDirectoryStream(imgDir, new ImagePathFilter());
         for (Path p : dir) {
-            try{
-            System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
+            try {
+                System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
 //            Path p = Paths.get("/home/keef/IdeaProjects/jexif/src/test/resources/image/fujifilm-finepix40i.jpg");
-            JExifReaderData data = reader.readImage(p);
-            System.out.println(String.format("All tags in file: %s.", data.getTags().size()));
-            }catch(JExifException ex){
+                JExifReaderData data = reader.readImage(p);
+                System.out.println(String.format("All tags in file: %s.", data.getTagNumbers().size()));
+                for (JExifTagNumber tagNumber : data.getTagNumbers()) {
+                    JExifValue value = data.getValueFor(tagNumber);
+                    JExifTag tag = value.getTag();
+                    if (JExifAscii.instance.equals(tag.getType())) {
+                        System.out.println(String.format("%s ( %s ): %s", tag, tagNumber, new String(value.getValue(), 0, value.getValue().length - 1, "US-ASCII")));
+                    } else {
+                        System.out.println(String.format("Skipping tag for tag: %s ( %s )", tag, tagNumber));
+                    }
+                    assert tagNumber.equals(tag.getTagNumber());
+                }
+            } catch (JExifException ex) {
                 System.out.println(ex.getMessage());
             }
         }
     }
 
     private static Path getImageDirectory(String[] args) throws JExifException {
-        if(args.length == 0){
+        if (args.length == 0) {
             return Paths.get("src/test/resources/image/");
         }
         Path imgDir = Paths.get(args[0]);

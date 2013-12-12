@@ -23,7 +23,7 @@ public class JExifTagNumber implements Serializable {
     }
 
     public String toHexString() {
-        return Integer.toHexString(getNumber());
+        return String.format("0x%s", Integer.toHexString(getNumber()));
     }
 
     @Override
