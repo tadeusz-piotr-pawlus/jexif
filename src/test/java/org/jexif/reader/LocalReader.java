@@ -10,8 +10,9 @@ import org.jexif.api.reader.JExifReader;
 import org.jexif.api.reader.JExifReaderData;
 import org.jexif.api.reader.JExifReaderException;
 import org.jexif.api.reader.JExifReaderFactory;
-import org.jexif.reader.oop.buffer.api.BufferProvider;
-import org.jexif.reader.oop.buffer.impl.ExtensionBasedBufferProvider;
+import org.jexif.reader.oop.buffer.impl.CR2BufferProvider;
+import org.jexif.reader.oop.buffer.impl.JPEGBufferProvider;
+import org.jexif.reader.oop.buffer.impl.SupportedFileTypesProvider;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -22,23 +23,25 @@ import java.nio.file.Paths;
 
 public class LocalReader {
 
-    private final BufferProvider bufferProvider;
+    private final SupportedFileTypesProvider supportedFileTypes;
     private JExifReader reader;
 
     public LocalReader() throws JExifException {
         JExifProvider provider = JExifProvider.provider();
         JExifReaderFactory factory = provider.createJExifReaderFactory();
         this.reader = factory.createJExifReader();
-        this.bufferProvider = new ExtensionBasedBufferProvider();
+        this.supportedFileTypes = new SupportedFileTypesProvider();
+        this.supportedFileTypes.registerBufferProvider(new JPEGBufferProvider());
+        this.supportedFileTypes.registerBufferProvider(new CR2BufferProvider());
     }
 
     public JExifReaderData readImage(Path p) throws JExifReaderException {
-        ByteBuffer buffer = getBufferProvider().getByteBuffer(p);
+        ByteBuffer buffer = getSupportedFileTypes().getByteBuffer(p);
         return getReader().readExifData(buffer);
     }
 
-    private BufferProvider getBufferProvider() {
-        return this.bufferProvider;
+    private SupportedFileTypesProvider getSupportedFileTypes() {
+        return this.supportedFileTypes;
     }
 
     private JExifReader getReader() {
