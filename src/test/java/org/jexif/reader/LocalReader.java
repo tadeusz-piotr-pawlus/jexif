@@ -5,7 +5,6 @@ import org.jexif.api.JExifProvider;
 import org.jexif.api.common.JExifTag;
 import org.jexif.api.common.JExifTagNumber;
 import org.jexif.api.common.JExifValue;
-import org.jexif.api.common.type.JExifAscii;
 import org.jexif.api.reader.JExifReader;
 import org.jexif.api.reader.JExifReaderData;
 import org.jexif.api.reader.JExifReaderException;
@@ -49,12 +48,14 @@ public class LocalReader {
     }
 
     public static void main(String[] args) throws IOException, JExifException {
+        printMemoryStatistics();
         LocalReader reader = new LocalReader();
         Path imgDir = getImageDirectory(args);
 
-        DirectoryStream<Path> dir = Files.newDirectoryStream(imgDir, new ImagePathFilter());
-        for (Path p : dir) {
+            DirectoryStream<Path> dir = Files.newDirectoryStream(imgDir, new ImagePathFilter());
+            for (Path p : dir) {
             try {
+                printMemoryStatistics();
                 System.out.println(String.format("Exif for: %s", p.toAbsolutePath().toString()));
 //            Path p = Paths.get("/home/keef/IdeaProjects/jexif/src/test/resources/image/fujifilm-finepix40i.jpg");
                 JExifReaderData data = reader.readImage(p);
@@ -62,17 +63,15 @@ public class LocalReader {
                 for (JExifTagNumber tagNumber : data.getTagNumbers()) {
                     JExifValue value = data.getValueFor(tagNumber);
                     JExifTag tag = value.getTag();
-                    if (JExifAscii.instance.equals(tag.getType())) {
-                        System.out.println(String.format("%s ( %s ): %s", tag, tagNumber, new String(value.getValue(), 0, value.getValue().length - 1, "US-ASCII")));
-                    } else {
-                        System.out.println(String.format("Skipping tag for tag: %s ( %s )", tag, tagNumber));
-                    }
+                    System.out.println(String.format("%s ( %s ): %s", tag, tagNumber, value.getValue().trim()));
                     assert tagNumber.equals(tag.getTagNumber());
                 }
             } catch (JExifException ex) {
                 System.out.println(ex.getMessage());
             }
+                dir.close();
         }
+        printMemoryStatistics();
     }
 
     private static Path getImageDirectory(String[] args) throws JExifException {
@@ -92,5 +91,13 @@ public class LocalReader {
         public boolean accept(Path entry) throws IOException {
             return entry.getFileName().toString().toLowerCase().endsWith("jpg");
         }
+    }
+
+    private final static void printMemoryStatistics(){
+        Runtime rt = Runtime.getRuntime();
+        long totalMB = rt.totalMemory() / 1024 / 1024;
+        long usedMB = (rt.totalMemory() - rt.freeMemory()) / 1024 / 1024;
+        System.out.println("--------->Total MB: " + totalMB);
+        System.out.println("--------->Used MB: " + usedMB);
     }
 }

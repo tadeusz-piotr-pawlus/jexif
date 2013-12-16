@@ -17,11 +17,14 @@ public abstract class AbstractBufferProvider implements BufferProvider {
         try {
             RandomAccessFile raf = new RandomAccessFile(path.toFile(), READ_ONLY);
             FileChannel channel = raf.getChannel();
-            long length = raf.length() < _64KB ? raf.length() : _64KB;
-            return channel.map(FileChannel.MapMode.READ_ONLY, 0, length);
+            int length = raf.length() < _64KB ? (int)raf.length() : _64KB;
+            ByteBuffer data = ByteBuffer.wrap(new byte[length]);
+            channel.read(data);
+            data.flip();
+            raf.close();
+            return data;
         } catch (IOException ex) {
             throw new BufferProviderException(ex);
         }
-
     }
 }

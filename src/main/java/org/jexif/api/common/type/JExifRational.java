@@ -1,5 +1,7 @@
 package org.jexif.api.common.type;
 
+import java.nio.ByteOrder;
+
 public class JExifRational extends AbstractJExifType {
 
     private static final String NAME = "RATIONAL";
@@ -9,5 +11,10 @@ public class JExifRational extends AbstractJExifType {
 
     private JExifRational() {
         super(ID, NAME, BYTES_NO);
+    }
+
+    @Override
+    public String convert(byte[] value, ByteOrder bo) {
+        return new String("Rational value should be here");
     }
 }

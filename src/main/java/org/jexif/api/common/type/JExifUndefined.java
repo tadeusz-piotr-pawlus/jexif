@@ -1,5 +1,7 @@
 package org.jexif.api.common.type;
 
+import java.nio.ByteOrder;
+
 public class JExifUndefined extends AbstractJExifType {
 
     private static final String NAME = "UNDEFINED";
@@ -9,5 +11,10 @@ public class JExifUndefined extends AbstractJExifType {
 
     private JExifUndefined() {
         super(ID, NAME, BYTES_NO);
+    }
+
+    @Override
+    public String convert(byte[] value, ByteOrder bo) {
+        return new String("Undefined value should be dfdfdfdfdvdvdhere");
     }
 }

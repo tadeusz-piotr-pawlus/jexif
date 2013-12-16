@@ -3,14 +3,14 @@ package org.jexif.api.common;
 public class JExifValue {
 
     private final JExifTag tag;
-    private final byte[] value;
+    private final String value;
 
-    public JExifValue(JExifTag tag, byte[] value) {
+    public JExifValue(JExifTag tag, String value) {
         this.tag = tag;
         this.value = value;
     }
 
-    public byte[] getValue() {
+    public String getValue() {
         return value;
     }
 

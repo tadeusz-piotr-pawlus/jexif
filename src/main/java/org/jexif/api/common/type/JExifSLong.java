@@ -1,5 +1,7 @@
 package org.jexif.api.common.type;
 
+import java.nio.ByteOrder;
+
 public class JExifSLong extends AbstractJExifType {
 
     private static final String NAME = "SLONG";
@@ -9,5 +11,10 @@ public class JExifSLong extends AbstractJExifType {
 
     private JExifSLong() {
         super(ID, NAME, BYTES_NO);
+    }
+
+    @Override
+    public String convert(byte[] value, ByteOrder bo) {
+        return new String("SLong value should be here");
     }
 }

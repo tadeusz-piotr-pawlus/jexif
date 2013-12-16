@@ -1,5 +1,8 @@
 package org.jexif.api.common.type;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteOrder;
+
 public class JExifAscii extends AbstractJExifType {
 
     private static final String NAME = "ASCII";
@@ -9,5 +12,14 @@ public class JExifAscii extends AbstractJExifType {
 
     private JExifAscii() {
         super(ID, NAME, BYTES_NO);
+    }
+
+    @Override
+    public String convert(byte[] value, ByteOrder bo) {
+        try {
+            return new String(value, "US-ASCII");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
     }
 }

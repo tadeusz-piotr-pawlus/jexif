@@ -12,6 +12,11 @@ public class JExifValueFactory {
     private final static Logger logger = LoggerFactory.getLogger(JExifValueFactory.class);
 
     public JExifValue createValue(JExifTag tag, ByteBuffer bb) throws JExifReaderFactoryException {
+        byte[] value = getBytes(tag, bb);
+        return new JExifValue(tag,  tag.getType().convert(value, bb.order()));
+    }
+
+    private byte[] getBytes(JExifTag tag, ByteBuffer bb) {
         byte[] value;
         int count = bb.getInt();
         int bytesNo = tag.getType().getBytesNumber() * count;
@@ -28,6 +33,6 @@ public class JExifValueFactory {
             value = new byte[4];
             bb.get(value);
         }
-        return new JExifValue(tag, value);
+        return value;
     }
 }
