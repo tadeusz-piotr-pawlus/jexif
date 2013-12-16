@@ -69,8 +69,8 @@ public class LocalReader {
             } catch (JExifException ex) {
                 System.out.println(ex.getMessage());
             }
-                dir.close();
         }
+        dir.close();
         printMemoryStatistics();
     }
 
