@@ -1,5 +1,6 @@
 package org.jexif.api.common.type;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class JExifShort extends AbstractJExifType {
@@ -15,16 +16,8 @@ public class JExifShort extends AbstractJExifType {
 
     @Override
     public String convert(byte[] value, ByteOrder bo) {
-        byte hi = value[0];
-        byte lo = value[1];
-        if(ByteOrder.BIG_ENDIAN == bo){
-            hi = value[0];
-            lo = value[1];
-        }else{
-            hi = value[1];
-            lo = value[0];
-        }
-        short val=(short)( ((hi&0xFF)<<8) | (lo&0xFF) );
-        return "" + val;
+        ByteBuffer data = ByteBuffer.wrap(value);
+        data.order(bo);
+        return "" + data.getShort();
     }
 }

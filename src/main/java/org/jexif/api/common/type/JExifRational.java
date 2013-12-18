@@ -1,5 +1,6 @@
 package org.jexif.api.common.type;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class JExifRational extends AbstractJExifType {
@@ -15,6 +16,8 @@ public class JExifRational extends AbstractJExifType {
 
     @Override
     public String convert(byte[] value, ByteOrder bo) {
-        return new String("Rational value should be here");
+        ByteBuffer data = ByteBuffer.wrap(value);
+        data.order(bo);
+        return String.format("%s / %s", data.getInt(), data.getInt());
     }
 }

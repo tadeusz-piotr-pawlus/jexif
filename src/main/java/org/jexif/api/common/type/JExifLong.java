@@ -1,5 +1,6 @@
 package org.jexif.api.common.type;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class JExifLong extends AbstractJExifType {
@@ -15,6 +16,8 @@ public class JExifLong extends AbstractJExifType {
 
     @Override
     public String convert(byte[] value, ByteOrder bo) {
-        return new String("Long value should be here");
+        ByteBuffer data = ByteBuffer.wrap(value);
+        data.order(bo);
+        return "" + data.getInt();
     }
 }
