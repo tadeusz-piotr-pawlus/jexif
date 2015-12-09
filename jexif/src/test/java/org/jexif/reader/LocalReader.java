@@ -93,7 +93,7 @@ public class LocalReader {
         }
     }
 
-    private final static void printMemoryStatistics(){
+    private static void printMemoryStatistics(){
         Runtime rt = Runtime.getRuntime();
         long totalMB = rt.totalMemory() / 1024 / 1024;
         long usedMB = (rt.totalMemory() - rt.freeMemory()) / 1024 / 1024;

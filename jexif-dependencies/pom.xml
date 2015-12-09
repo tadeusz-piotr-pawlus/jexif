@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jexif</groupId>
+    <artifactId>jexif-dependencies</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>jexif Dependencies</name>
+    <description>Dependnecies for jexif.org project</description>
+    <url>http://jexif.org/</url>
+    <organization>
+        <name>jexif.org</name>
+        <url>http://jexif.org/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/jexif/jexif/blob/master/LICENSE</url>
+            <distribution>may be downloaded from the Maven repository</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/jexif/jexif</url>
+    </scm>
+    <developers>
+        <developer>
+            <id>keef</id>
+            <name>Tadeusz Piotr Pawlus</name>
+            <email>piotr.pawlus@gmail.com</email>
+            <roles>
+                <role>all</role>
+            </roles>
+            <timezone>CEST/CET</timezone>
+        </developer>
+    </developers>
+    <properties>
+        <slf4j.version>1.7.13</slf4j.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.6</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

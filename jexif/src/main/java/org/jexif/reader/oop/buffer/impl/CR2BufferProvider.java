@@ -19,12 +19,11 @@ public class CR2BufferProvider extends AbstractBufferProvider {
     @Override
     public ByteBuffer getByteBuffer(Path path) throws BufferProviderException {
         //TODO: update according to CR2 spec.
-        ByteBuffer bb = map(path);
-        return bb;
+        return map(path);
     }
 
     @Override
     public Collection<ExplicitCaseInsensitiveExtension> getSupportedExtensions() throws BufferProviderException {
-        return Collections.unmodifiableCollection(Arrays.asList(cr2));
+        return Collections.unmodifiableCollection(Collections.singletonList(cr2));
     }
 }

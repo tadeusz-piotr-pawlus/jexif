@@ -15,6 +15,6 @@ public class JExifSLong extends AbstractJExifType {
 
     @Override
     public String convert(byte[] value, ByteOrder bo) {
-        return new String("SLong value should be here");
+        return "SLong value should be here";
     }
 }

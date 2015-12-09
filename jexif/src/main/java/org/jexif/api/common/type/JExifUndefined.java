@@ -15,6 +15,6 @@ public class JExifUndefined extends AbstractJExifType {
 
     @Override
     public String convert(byte[] value, ByteOrder bo) {
-        return new String("Undefined value should be dfdfdfdfdvdvdhere");
+        return "Undefined value should be dfdfdfdfdvdvdhere";
     }
 }

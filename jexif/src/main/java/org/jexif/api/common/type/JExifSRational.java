@@ -15,6 +15,6 @@ public class JExifSRational extends AbstractJExifType {
 
     @Override
     public String convert(byte[] value, ByteOrder bo) {
-        return new String("SRational value should be here");
+        return "SRational value should be here";
     }
 }

@@ -29,9 +29,8 @@ public class ExplicitCaseInsensitiveExtension {
 
         ExplicitCaseInsensitiveExtension that = (ExplicitCaseInsensitiveExtension) o;
 
-        if (extension != null ? !extension.equalsIgnoreCase(that.extension) : that.extension != null) return false;
+        return !(extension != null ? !extension.equalsIgnoreCase(that.extension) : that.extension != null);
 
-        return true;
     }
 
     @Override

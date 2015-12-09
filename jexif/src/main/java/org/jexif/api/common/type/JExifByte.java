@@ -15,6 +15,6 @@ public class JExifByte extends AbstractJExifType {
 
     @Override
     public String convert(byte[] value, ByteOrder bo) {
-        return new String("byte value should be here");
+        return "byte value should be here";
     }
 }

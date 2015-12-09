@@ -23,15 +23,13 @@ public abstract class JExifProvider {
             if (provider != null)
                 return provider;
             return AccessController.doPrivileged(
-                    new PrivilegedAction<JExifProvider>() {
-                        public JExifProvider run() {
-                            if (loadProviderFromProperty())
-                                return provider;
-                            if (loadProviderAsService())
-                                return provider;
-                            provider = new JExifProviderImpl();
+                    (PrivilegedAction<JExifProvider>) () -> {
+                        if (loadProviderFromProperty())
                             return provider;
-                        }
+                        if (loadProviderAsService())
+                            return provider;
+                        provider = new JExifProviderImpl();
+                        return provider;
                     });
         }
     }
@@ -39,7 +37,7 @@ public abstract class JExifProvider {
     private static boolean loadProviderAsService() {
         ServiceLoader<JExifProvider> sl = ServiceLoader.load(JExifProvider.class, ClassLoader.getSystemClassLoader());
         Iterator<JExifProvider> i = sl.iterator();
-        for (;;) {
+        for (; ; ) {
             try {
                 if (!i.hasNext())
                     return false;
@@ -61,7 +59,7 @@ public abstract class JExifProvider {
             return false;
         try {
             Class<?> c = Class.forName(cn, true, ClassLoader.getSystemClassLoader());
-            provider = (JExifProvider)c.newInstance();
+            provider = (JExifProvider) c.newInstance();
             return true;
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SecurityException x) {
             throw new ServiceConfigurationError(null, x);

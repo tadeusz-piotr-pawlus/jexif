@@ -3,26 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.jexif</groupId>
-        <artifactId>parent.jexif.org</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <artifactId>jexif</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>jexif</name>
-    <description>Yet another exif framework</description>
-
+    <groupId>org.jexif</groupId>
+    <artifactId>jexif-build</artifactId>
+    <version>1.0.0.BUILD-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>jexif Build</name>
+    <description>jexif Build</description>
     <url>http://jexif.org/</url>
-    <inceptionYear>2013</inceptionYear>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
+    <organization>
+        <name>jexif.org</name>
+        <url>http://jexif.org/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://github.com/jexif/jexif/blob/master/LICENSE</url>
+            <distribution>may be downloaded from the Maven repository</distribution>
+        </license>
+    </licenses>
     <scm>
-        <connection>scm:git:git://github.com/jexif/jexif</connection>
-        <developerConnection>scm:git:https://github.com/jexif/jexif.git</developerConnection>
         <url>https://github.com/jexif/jexif</url>
     </scm>
     <developers>
@@ -36,43 +35,12 @@
             <timezone>CEST/CET</timezone>
         </developer>
     </developers>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-        <resources>
-            <resource>
-                <directory>.</directory>
-                <targetPath>META-INF</targetPath>
-                <includes>
-                    <include>LICENSE</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
-    </build>
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.0.13</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <properties>
+        <main.basedir>${basedir}</main.basedir>
+    </properties>
+    <modules>
+        <module>jexif</module>
+        <module>jexif-parent</module>
+        <module>jexif-dependencies</module>
+    </modules>
 </project>
