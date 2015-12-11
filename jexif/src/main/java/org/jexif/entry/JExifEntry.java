@@ -1,8 +1,8 @@
 package org.jexif.entry;
 
-import org.jexif.api.common.JExifTag;
 import org.jexif.api.common.JExifValue;
-import org.jexif.api.common.type.JExifType;
+import org.jexif.tags.database.spi.JExifTag;
+import org.jexif.tags.database.spi.JExifType;
 
 public class JExifEntry {
     private final JExifTag tag;

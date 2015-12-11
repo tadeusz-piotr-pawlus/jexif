@@ -44,5 +44,7 @@
         <module>jexif</module>
         <module>jexif-parent</module>
         <module>jexif-dependencies</module>
+        <module>jexif-tags-database-spi</module>
+        <module>jexif-tags-database-default</module>
     </modules>
 </project>

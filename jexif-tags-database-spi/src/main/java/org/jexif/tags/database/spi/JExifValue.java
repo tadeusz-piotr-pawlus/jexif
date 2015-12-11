@@ -1,6 +1,4 @@
-package org.jexif.api.common;
-
-import org.jexif.tags.database.spi.JExifTag;
+package org.jexif.tags.database.spi;
 
 public class JExifValue {
 

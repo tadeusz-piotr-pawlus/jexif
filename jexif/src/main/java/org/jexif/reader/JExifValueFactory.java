@@ -1,8 +1,8 @@
 package org.jexif.reader;
 
-import org.jexif.api.common.JExifTag;
 import org.jexif.api.common.JExifValue;
 import org.jexif.api.reader.JExifReaderFactoryException;
+import org.jexif.tags.database.spi.JExifTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ public class JExifValueFactory {
 
     public JExifValue createValue(JExifTag tag, ByteBuffer bb) throws JExifReaderFactoryException {
         byte[] value = getBytes(tag, bb);
-        return new JExifValue(tag,  tag.getType().convert(value, bb.order()));
+        return new JExifValue(tag, tag.getType().convert(value, bb.order()));
     }
 
     private byte[] getBytes(JExifTag tag, ByteBuffer bb) {

@@ -1,7 +1,7 @@
 package org.jexif.api.reader;
 
-import org.jexif.api.common.JExifTagNumber;
 import org.jexif.api.common.JExifValue;
+import org.jexif.tags.database.spi.JExifTagNumber;
 
 import java.util.Collection;
 

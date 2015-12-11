@@ -1,4 +1,4 @@
-package org.jexif.reader.tag.database.impl;
+package org.jexif.tags.database;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

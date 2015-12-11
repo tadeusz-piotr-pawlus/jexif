@@ -1,13 +1,7 @@
-package org.jexif.reader.tag.database.impl;
+package org.jexif.tags.database;
 
-import org.jexif.api.common.JExifTag;
-import org.jexif.api.common.JExifTagNumber;
-import org.jexif.api.common.JExifValue;
-import org.jexif.api.common.type.JExifType;
-import org.jexif.api.common.type.JExifTypeFactory;
-import org.jexif.api.common.type.JExifTypeFactoryException;
-import org.jexif.reader.tag.database.api.JExifTagsDatabase;
-import org.jexif.reader.tag.database.api.JExifTagsDatabaseException;
+import org.jexif.tags.database.spi.*;
+import org.jexif.tags.database.type.JExifTypeFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -18,43 +12,43 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryJExifTagsDatabase implements JExifTagsDatabase {
     private final List<JExifTag> tags;
 
-    public InMemoryJExifTagsDatabase() throws JExifTagsDatabaseException {
-        try {
+    public InMemoryJExifTagsDatabase() {
+        this.tags = readTagsFromXML();
+    }
 
+    private List<JExifTag> readTagsFromXML() {
+        try {
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
             SAXParser parser = saxParserFactory.newSAXParser();
             JExifTagDatabaseHandler handler = new JExifTagDatabaseHandler();
-
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("exif-tags.xml");
-
             parser.parse(new InputSource(is), handler);
-            this.tags = new ArrayList<>();
-
             TagsConverter tagConverter = new TagsConverter(handler.getRadix());
-            for (JExifDatabaseTag rawTag : handler.getTags()) {
-                try {
-                    tags.add(tagConverter.convert(rawTag));
-                } catch (JExifTypeFactoryException e) {
-                    //unable to convert type.
-                }
-            }
+            return handler.getTags()
+                    .stream()
+                    .map(tagConverter::convert)
+                    .collect(Collectors.toList());
         } catch (ParserConfigurationException | SAXException | IOException ex) {
-            throw new JExifTagsDatabaseException(ex);
+            //TODO
+            ex.printStackTrace();
         }
+        //TODO
+        return new ArrayList<>();
     }
 
     @Override
-    public JExifTag getTag(JExifTagNumber tagNumber, JExifType type) throws JExifTagsDatabaseException {
+    public JExifTag getTag(JExifTagNumber tagNumber, JExifType type) {
         for (JExifTag tag : tags) {
             if (tag.getTagNumber().equals(tagNumber) && tag.getType().equals(type)) {
                 return tag;
             }
         }
-        throw new JExifTagsDatabaseException("tag not found: " + tagNumber);
+        return null;
     }
 
     private final static class TagsConverter {
@@ -66,7 +60,7 @@ public class InMemoryJExifTagsDatabase implements JExifTagsDatabase {
             this.radix = radix;
         }
 
-        public JExifTag convert(JExifDatabaseTag rawTag) throws JExifTypeFactoryException {
+        public JExifTag convert(JExifDatabaseTag rawTag) {
             JExifTagNumber tagNumber = new JExifTagNumber(rawTag.getNumber(), getRadix());
             String name = rawTag.getName();
             JExifType type = this.typeFactory.createByName(rawTag.getType());

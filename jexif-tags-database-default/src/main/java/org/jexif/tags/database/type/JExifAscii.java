@@ -1,4 +1,4 @@
-package org.jexif.api.common.type;
+package org.jexif.tags.database.type;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteOrder;

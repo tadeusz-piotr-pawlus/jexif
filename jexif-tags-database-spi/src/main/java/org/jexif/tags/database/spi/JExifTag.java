@@ -1,6 +1,4 @@
-package org.jexif.api.common;
-
-import org.jexif.api.common.type.JExifType;
+package org.jexif.tags.database.spi;
 
 import java.io.Serializable;
 

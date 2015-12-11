@@ -1,4 +1,4 @@
-package org.jexif.api.common;
+package org.jexif.tags.database.spi;
 
 import java.io.Serializable;
 import java.math.BigInteger;

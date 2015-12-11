@@ -1,4 +1,4 @@
-package org.jexif.api.common.type;
+package org.jexif.tags.database.spi;
 
 import java.nio.ByteOrder;
 

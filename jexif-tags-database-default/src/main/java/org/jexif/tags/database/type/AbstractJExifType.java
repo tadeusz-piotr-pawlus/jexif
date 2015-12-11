@@ -1,4 +1,6 @@
-package org.jexif.api.common.type;
+package org.jexif.tags.database.type;
+
+import org.jexif.tags.database.spi.JExifType;
 
 public abstract class AbstractJExifType implements JExifType {
 

@@ -1,4 +1,6 @@
-package org.jexif.api.common.type;
+package org.jexif.tags.database.type;
+
+import org.jexif.tags.database.spi.JExifType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,15 +20,12 @@ public class JExifTypeFactory {
         this.name2id.put(JExifSRational.instance.getName(), JExifSRational.instance.getId());
     }
 
-    public JExifType createByName(String name) throws JExifTypeFactoryException {
+    public JExifType createByName(String name) {
         Short id = name2id.get(name);
-        if (id == null) {
-            throw new JExifTypeFactoryException("Unknown type NAME: " + name);
-        }
         return createById(id);
     }
 
-    public JExifType createById(short id) throws JExifTypeFactoryException {
+    public JExifType createById(short id) {
         switch (id) {
             case 1:
                 return JExifByte.instance;
@@ -45,7 +44,7 @@ public class JExifTypeFactory {
             case 10:
                 return JExifSRational.instance;
             default:
-                throw new JExifTypeFactoryException("Unknown type ID: " + id);
+                throw new RuntimeException("Unknown type ID: " + id);
         }
     }
 

@@ -1,4 +1,4 @@
-package org.jexif.reader.tag.database.impl;
+package org.jexif.tags.database;
 
 public class JExifDatabaseTag {
 

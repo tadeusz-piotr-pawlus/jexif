@@ -1,12 +1,12 @@
 package org.jexif.reader;
 
 import org.jexif.api.common.JExifHeader;
-import org.jexif.api.common.JExifTagNumber;
 import org.jexif.api.common.JExifValue;
 import org.jexif.api.reader.*;
 import org.jexif.reader.oop.header.JExifHeaderFactory;
 import org.jexif.reader.oop.header.JExifHeaderFactoryException;
 import org.jexif.reader.tag.database.api.JExifTagsDatabaseException;
+import org.jexif.tags.database.spi.JExifTagNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
